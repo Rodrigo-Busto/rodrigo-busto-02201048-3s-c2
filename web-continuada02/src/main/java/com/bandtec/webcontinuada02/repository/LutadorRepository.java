@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LutadorRepository extends JpaRepository<Lutador, Integer> {
 
-    List<Lutador> findAllOrderByForcaGolpeAsc();
+    List<Lutador> findByOrderByForcaGolpeAsc();
 
     Integer countByVivoTrue();
 

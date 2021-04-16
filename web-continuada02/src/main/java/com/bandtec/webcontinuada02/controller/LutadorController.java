@@ -24,7 +24,7 @@ public class LutadorController {
 
     @GetMapping("/")
     public ResponseEntity getLutadores(){
-        return ResponseEntity.status(200).body( lutadorRepository.findAllOrderByForcaGolpeAsc() );
+        return ResponseEntity.status(200).body( lutadorRepository.findByOrderByForcaGolpeAsc() );
     }
 
     @GetMapping("/contagem-vivos")
@@ -59,10 +59,11 @@ public class LutadorController {
             lutadorApanha = lutadorRepository.findById( novoGolpe.getIdLutadorApanha() ).get();
             lutadorBate = lutadorRepository.findById( novoGolpe.getIdLutadorBate() ).get();
 
-            if (lutadorApanha.isVivo() || lutadorBate.isVivo()){
+            if (!lutadorApanha.isVivo() || !lutadorBate.isVivo()){
                 return ResponseEntity.status(400).body("Ambos os lutadores devem estar vivos!");
             }else{
                 lutadorApanha.apanha( lutadorBate.getForcaGolpe() );
+                lutadorRepository.save( lutadorApanha );
             }
         }
         return ResponseEntity.status(201).body(new Lutador[]{lutadorApanha, lutadorBate});

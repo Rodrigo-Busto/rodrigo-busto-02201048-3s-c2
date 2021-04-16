@@ -26,12 +26,12 @@ public class Lutador {
 
     private Integer concentracoesRealizadas;
 
-    public Lutador(Integer id, @NotBlank @Size(min = 3, max = 12) String nome, @PositiveOrZero Double forcaGolpe) {
-        this.id = id;
-        this.nome = nome;
-        this.forcaGolpe = forcaGolpe;
+    private Boolean vivo;
+
+    public Lutador() {
         this.vida = 100.0;
         this.concentracoesRealizadas = 0;
+        this.vivo = true;
     }
 
     public Integer getId() {
@@ -55,7 +55,11 @@ public class Lutador {
     }
 
     public Boolean isVivo(){
-        return vida > 0 ? true : false;
+        return vivo;
+    }
+
+    public void setVivo(Boolean vivo) {
+        this.vivo = vivo;
     }
 
     public void concentrar(){
@@ -69,6 +73,7 @@ public class Lutador {
     public void apanha(Double forcaGolpe){
         if (forcaGolpe >= this.vida){
             this.vida = 0.0;
+            this.vivo = false;
         }else {
             this.vida -= forcaGolpe;
         }
